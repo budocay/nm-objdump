@@ -13,7 +13,35 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <elf.h>
-#include "../include/nm.h"
+#include "nm.h"
+
+char                print_char_elf2(Elf64_Sym sym, Elf64_Shdr *shdr)
+{
+    char            c;
+
+    c = '\0';
+    if (sym.st_shndx == SHN_ABS)
+        c = 'A';
+    else if (sym.st_shndx == SHN_COMMON)
+        c = 'C';
+    else if (shdr[sym.st_shndx].sh_type == SHT_NOBITS
+             && shdr[sym.st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
+        c = 'B';
+    else if (shdr[sym.st_shndx].sh_type == SHT_PROGBITS
+             && shdr[sym.st_shndx].sh_flags == SHF_ALLOC)
+        c = 'R';
+    else if (shdr[sym.st_shndx].sh_type == SHT_PROGBITS
+             && shdr[sym.st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
+        c = 'D';
+    else if (shdr[sym.st_shndx].sh_type == SHT_PROGBITS
+             && shdr[sym.st_shndx].sh_flags == (SHF_ALLOC | SHF_EXECINSTR))
+        c = 'T';
+    else if (shdr[sym.st_shndx].sh_type == SHT_DYNAMIC)
+        c = 'D';
+    else
+        c = '?';
+    return c;
+}
 
 char                print_char_elf(Elf64_Sym sym, Elf64_Shdr *shdr)
 {
@@ -36,26 +64,8 @@ char                print_char_elf(Elf64_Sym sym, Elf64_Shdr *shdr)
     }
     else if (sym.st_shndx == SHN_UNDEF)
         c = 'U';
-    else if (sym.st_shndx == SHN_ABS)
-        c = 'A';
-    else if (sym.st_shndx == SHN_COMMON)
-        c = 'C';
-    else if (shdr[sym.st_shndx].sh_type == SHT_NOBITS
-             && shdr[sym.st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
-        c = 'B';
-    else if (shdr[sym.st_shndx].sh_type == SHT_PROGBITS
-             && shdr[sym.st_shndx].sh_flags == SHF_ALLOC)
-        c = 'R';
-    else if (shdr[sym.st_shndx].sh_type == SHT_PROGBITS
-             && shdr[sym.st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
-        c = 'D';
-    else if (shdr[sym.st_shndx].sh_type == SHT_PROGBITS
-             && shdr[sym.st_shndx].sh_flags == (SHF_ALLOC | SHF_EXECINSTR))
-        c = 'T';
-    else if (shdr[sym.st_shndx].sh_type == SHT_DYNAMIC)
-        c = 'D';
-    else
-        c = '?';
+   else if (print_char_elf2(sym, shdr) != '\0')
+        c = print_char_elf2(sym, shdr);
     if (ELF64_ST_BIND(sym.st_info) == STB_LOCAL && c != '?')
         c += 32;
     return c;
@@ -66,9 +76,12 @@ void                print_sec_and_sym(Elf64_Sym sym, void *data, Elf64_Shdr *shd
     if (sym.st_name != 0)
     {
         if (sym.st_value != 0 && sym.st_info != STT_FILE)
-            printf("%016x %c %s\n", (unsigned int) sym.st_value, print_char_elf(sym, shdr),(char *) (data + shdr->sh_offset + sym.st_name));
+            printf("%016x %c %s\n", (unsigned int) sym.st_value,
+                   print_char_elf(sym, shdr),
+                   (char *) (data + shdr->sh_offset + sym.st_name));
         else if (sym.st_info != STT_FILE)
-            printf("%16s %c %s\n", " ", print_char_elf(sym, shdr),((char *)(data + shdr->sh_offset + sym.st_name)));
+            printf("%16s %c %s\n", " ", print_char_elf(sym, shdr),
+                   ((char *)(data + shdr->sh_offset + sym.st_name)));
     }
 }
 
@@ -93,13 +106,6 @@ char                *my_nm(void *data, Elf64_Ehdr *elf)
     }
   return (0);
 }
-
-
-void        my_nm_32(void *data, char *name_file)
-{
-
-}
-
 
 int   main(int ac, char **av)
 {
