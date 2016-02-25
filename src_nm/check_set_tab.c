@@ -1,6 +1,12 @@
-//
-// Created by lina_a on 25/02/16.
-//
+/*
+** check_set_tab.c for nm_set_check in
+**
+** Made by lina_a
+** Login   <lina_a@epitech.net>
+**
+** Started on  Thu Feb 25 19:58:31 2016 lina_a
+** Last update Thu Feb 25 19:58:31 2016 lina_a
+*/
 
 #include <unistd.h>
 #include <stdio.h>
@@ -8,12 +14,12 @@
 #include <sys/stat.h>
 #include <stdlib.h>
 #include <elf.h>
-#include <bits/string2.h>
-#include "../include/objdump.h"
-#include "../include/nm.h"
+#include <string.h>
+#include "objdump.h"
+#include "nm.h"
 
-Elf64_Shdr	*set_sym_tab(Elf64_Shdr **string_sec, char *str, Elf64_Ehdr *elf,
-                           Elf64_Shdr *shdr)
+Elf64_Shdr	*set_sym_tab(Elf64_Shdr **string_sec, char *str,
+			     Elf64_Ehdr *elf,Elf64_Shdr *shdr)
 {
     int			i;
     Elf64_Shdr		*symsection;
@@ -37,7 +43,7 @@ Elf64_Shdr	*set_sym_tab(Elf64_Shdr **string_sec, char *str, Elf64_Ehdr *elf,
 
 
 
-void		which_header_correct_is(void *data, char *name_file, int fd)
+void		which_header_correct_is(void *data, int fd)
 {
     Elf64_Ehdr  *elf;
     Elf32_Ehdr  *elf32;
@@ -52,7 +58,7 @@ void		which_header_correct_is(void *data, char *name_file, int fd)
     {
         elf32 = (Elf32_Ehdr*)data;
         if (elf32->e_ident[EI_CLASS] == ELFCLASS32)
-            my_nm_32(data, name_file);
+            my_nm_32();
     }
     else
     {
@@ -81,7 +87,7 @@ void    check_file(int fd, char *av)
         dprintf(STDERR_FILENO, "%m\n");
         return;
     }
-    which_header_correct_is(data, av, fd);
+    which_header_correct_is(data, fd);
     if ((munmap(data, (size_t) file.st_size)) == -1)
     {
         dprintf(STDERR_FILENO, "%m\n");

@@ -49,7 +49,7 @@ char                *my_nm(void *data, Elf64_Ehdr *elf)
 }
 
 
-void        my_nm_32(void *data, char *name_file)
+void        my_nm_32()
 {
 
 }

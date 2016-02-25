@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "../include/objdump.h"
+#include "objdump.h"
 
 bool    section_not_printable(char *data, Elf64_Shdr *shdr, int cmpt)
 {
