@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <elf.h>
-#include "nm.h"
+#include "../include/nm.h"
 
 char                print_char_elf2(Elf64_Sym sym, Elf64_Shdr *shdr)
 {

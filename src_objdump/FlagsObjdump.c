@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "objdump.h"
+#include "../include/objdump.h"
 
 int     flags_to_found32(Elf32_Ehdr *elf, Elf32_Shdr *shdr, char *str)
 {

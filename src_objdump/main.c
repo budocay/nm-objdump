@@ -15,7 +15,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
-#include "objdump.h"
+#include "../include/objdump.h"
 
 int        found_flag(char *str, Elf64_Shdr *shdr, Elf64_Ehdr *elf)
 {
@@ -115,6 +115,6 @@ int         main(int ac, char **av)
 	    }
       }
     else
-      dprintf(STDERR_FILENO, "Usage: ./my_objdump <binary file>\n");
+      dprintf(STDERR_FILENO, "/usr/bin/objdump 'a.out' : No such file\n");
     return (0);
 }

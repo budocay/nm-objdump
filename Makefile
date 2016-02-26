@@ -12,7 +12,7 @@ CC	= gcc
 
 RM	= rm -f
 
-CFLAGS	+= -Wall -Wextra -I./include
+CFLAGS	+= -Wall -Wextra -I./include -g
 
 NAME_OBJDUMP	= my_objdump
 
@@ -30,7 +30,7 @@ SRCS_OBJDUMP	= ./src_objdump/main.c \
 SRCS_NM		= ./src_nm/main.c \
            	  ./src_objdump/verify_header.c \
            	  ./src_objdump/read_files.c \
-		  ./src_nm/check_set_tab.c
+           	  ./src_nm/check_set_tab.c
 
 OBJS_OBJDUMP	= $(SRCS_OBJDUMP:.c=.o)
 

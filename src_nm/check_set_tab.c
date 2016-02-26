@@ -9,8 +9,8 @@
 #include <stdlib.h>
 #include <elf.h>
 #include <string.h>
-#include "objdump.h"
-#include "nm.h"
+#include "../include/objdump.h"
+#include "../include/nm.h"
 
 
 void        check_truncated_file(char *name_file, int fd)

@@ -12,7 +12,7 @@
 #include <unistd.h>
 #include <elf.h>
 #include <stdlib.h>
-#include "objdump.h"
+#include "../include/objdump.h"
 
 int         check_header_elf_32(Elf32_Ehdr *data)
 {

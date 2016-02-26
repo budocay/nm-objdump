@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "objdump.h"
+#include "../include/objdump.h"
 
 bool    section_not_printable(char *data, Elf64_Shdr *shdr, int cmpt)
 {
@@ -91,7 +91,7 @@ void        check_truncated_file(char *name_file, int fd)
         dprintf(STDERR_FILENO,"/usr/bin/objdump: ./%s: File truncated\n",
                 name_file);
         close(fd);
-	exit(EXIT_SUCCESS);
+        exit(EXIT_SUCCESS);
         return;
     }
 }
