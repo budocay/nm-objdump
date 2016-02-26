@@ -82,10 +82,10 @@ void        objdump_flag_s_elf_32(char *str, Elf32_Ehdr *elf, Elf32_Shdr *shdr)
     while (cmpt < elf->e_shnum)
       {
         if (shdr[cmpt].sh_size
-            && strcmp(&str[shdr[cmpt].sh_name], ".strtab") == 0
-            && strcmp(&str[shdr[cmpt].sh_name], ".symtab") == 0
-            && strcmp(&str[shdr[cmpt].sh_name], ".shstrtab") == 0
-            && strcmp(&str[shdr[cmpt].sh_name], ".bss") == 0)
+            || strcmp(&str[shdr[cmpt].sh_name], ".strtab") == 0
+            || strcmp(&str[shdr[cmpt].sh_name], ".symtab") == 0
+            || strcmp(&str[shdr[cmpt].sh_name], ".shstrtab") == 0
+            || strcmp(&str[shdr[cmpt].sh_name], ".bss") == 0)
 	  section_to_print_elf_32(str, elf, shdr, cmpt);
         cmpt++;
       }
