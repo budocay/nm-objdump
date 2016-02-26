@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <elf.h>
-#include "../include/nm.h"
+#include "nm.h"
 
 char                print_char_elf2(Elf64_Sym sym, Elf64_Shdr *shdr)
 {
@@ -71,7 +71,8 @@ char                print_char_elf(Elf64_Sym sym, Elf64_Shdr *shdr)
     return c;
 }
 
-void                print_sec_and_sym(Elf64_Sym sym, void *data, Elf64_Shdr *shdr)
+void                print_sec_and_sym(Elf64_Sym sym, void *data,
+				      Elf64_Shdr *shdr)
 {
     if (sym.st_name != 0)
     {

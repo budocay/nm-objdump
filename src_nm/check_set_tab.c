@@ -1,6 +1,12 @@
-//
-// Created by lina_a on 25/02/16.
-//
+/*
+** check_set_tab.c for check_set_tab in /home/lina_a/rendu/B4/PSU_2015_nmobjdump/src_nm
+**
+** Made by lina_a
+** Login   <lina_a@epitech.net>
+**
+** Started on  Fri Feb 26 13:50:38 2016 lina_a
+** Last update Fri Feb 26 13:50:38 2016 lina_a
+*/
 
 #include <unistd.h>
 #include <stdio.h>
@@ -9,9 +15,8 @@
 #include <stdlib.h>
 #include <elf.h>
 #include <string.h>
-#include "../include/objdump.h"
-#include "../include/nm.h"
-
+#include "objdump.h"
+#include "nm.h"
 
 void        check_truncated_file(char *name_file, int fd)
 {
@@ -47,8 +52,6 @@ Elf64_Shdr	*set_sym_tab(Elf64_Shdr **string_sec, char *str, Elf64_Ehdr *elf,
     return (symsection);
 }
 
-
-
 void		which_header_correct_is(void *data, char *name_file, int fd)
 {
     Elf64_Ehdr *elf;
@@ -63,9 +66,10 @@ void		which_header_correct_is(void *data, char *name_file, int fd)
     }
     else if (check_header_elf_32(((Elf32_Ehdr *) data)) != -1)
     {
+        check_truncated_file(name_file, fd);
         elf32 = (Elf32_Ehdr *) data;
         if (elf32->e_ident[EI_CLASS] == ELFCLASS32)
-            my_nm_32();
+            my_nm_32(data, elf32);
     }
     else
     {
@@ -98,8 +102,24 @@ void    check_file(int fd, char *av)
     }
 }
 
-
-void        my_nm_32( )
+char        *my_nm_32(void *data, Elf32_Ehdr *elf)
 {
+    unsigned int             idx;
+    Elf32_Shdr		*shdr;
+    Elf32_Sym       sym;
+    Elf32_Shdr		*pShdr;
+    char            *str;
 
+    idx = 0;
+    shdr = (Elf32_Shdr*)(data + elf->e_shoff);
+    str = (char*)(data + shdr[elf->e_shstrndx].sh_offset);
+    if ((pShdr = set_sym_tab32bits(&shdr, str, elf, shdr)) == NULL)
+        return (NULL);
+    while (idx < (pShdr->sh_size / pShdr->sh_entsize))
+    {
+        sym = ((Elf32_Sym*)(data + pShdr->sh_offset))[idx];
+        print_sec_and_sym32bits(sym, data, shdr);
+        idx++;
+    }
+    return (0);
 }
