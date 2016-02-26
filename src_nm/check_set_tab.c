@@ -1,6 +1,12 @@
-//
-// Created by lina_a on 25/02/16.
-//
+/*
+** check_set_tab.c for check in
+**
+** Made by lina_a
+** Login   <lina_a@epitech.net>
+**
+** Started on  Fri Feb 26 13:34:55 2016 lina_a
+** Last update Fri Feb 26 13:34:55 2016 lina_a
+*/
 
 #include <unistd.h>
 #include <stdio.h>
@@ -9,9 +15,8 @@
 #include <stdlib.h>
 #include <elf.h>
 #include <string.h>
-#include "../include/objdump.h"
-#include "../include/nm.h"
-
+#include "objdump.h"
+#include "nm.h"
 
 void        check_truncated_file(char *name_file, int fd)
 {
@@ -46,8 +51,6 @@ Elf64_Shdr	*set_sym_tab(Elf64_Shdr **string_sec, char *str, Elf64_Ehdr *elf,
     }
     return (symsection);
 }
-
-
 
 void		which_header_correct_is(void *data, char *name_file, int fd)
 {
@@ -97,7 +100,6 @@ void    check_file(int fd, char *av)
         return;
     }
 }
-
 
 void        my_nm_32( )
 {

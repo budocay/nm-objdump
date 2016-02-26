@@ -13,7 +13,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include "../include/objdump.h"
+#include "objdump.h"
 
 int        found_flag_elf_32(char *str, Elf32_Shdr *shdr, Elf32_Ehdr *elf)
 {

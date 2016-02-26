@@ -12,7 +12,7 @@ CC	= gcc
 
 RM	= rm -f
 
-CFLAGS	+= -Wall -Wextra -I./include -g
+CFLAGS	+= -Wall -Wextra -I./include
 
 NAME_OBJDUMP	= my_objdump
 

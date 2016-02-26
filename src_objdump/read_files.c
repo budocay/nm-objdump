@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <elf.h>
-#include "../include/objdump.h"
+#include "objdump.h"
 
 char        *verification(char *av)
 {
