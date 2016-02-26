@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "../include/objdump.h"
+#include "objdump.h"
 
 bool    section_not_printable(char *data, Elf64_Shdr *shdr, int cmpt)
 {
@@ -30,9 +30,7 @@ bool    section_not_printable(char *data, Elf64_Shdr *shdr, int cmpt)
         || strcmp(&data[shdr[cmpt].sh_name], ".rela.debug_ranges") == 0
         || strcmp(&data[shdr[cmpt].sh_name], ".rela.debug_loc") == 0
         || strcmp(&data[shdr[cmpt].sh_name], ".rela.fini_array") == 0
-        || strcmp(&data[shdr[cmpt].sh_name], ".rela.data.rel") == 0
-        || strcmp(&data[shdr[cmpt].sh_name], ".init") == 0
-        || strcmp(&data[shdr[cmpt].sh_name], ".fini") == 0)
+        || strcmp(&data[shdr[cmpt].sh_name], ".rela.data.rel") == 0)
         return true;
     return false;
 }

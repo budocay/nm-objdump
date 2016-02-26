@@ -15,7 +15,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
-#include "../include/objdump.h"
+#include "objdump.h"
 
 int        found_flag(char *str, Elf64_Shdr *shdr, Elf64_Ehdr *elf)
 {
