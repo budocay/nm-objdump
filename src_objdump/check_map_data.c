@@ -75,7 +75,7 @@ void		which_header_correct_is(void *data, char *name_file, int fd)
       }
     else
       {
-          dprintf(STDERR_FILENO, "/usr/bin/objdump: ./%s:"
+          dprintf(STDERR_FILENO, "/usr/bin/objdump: %s:"
                   " File format not recognized\n", name_file);
         close(fd);
         exit(EXIT_SUCCESS);
@@ -86,7 +86,7 @@ void        check_truncated_file(char *name_file, int fd)
 {
     if (verification(name_file) == NULL)
     {
-        dprintf(STDERR_FILENO,"/usr/bin/objdump: ./%s: File truncated\n",
+        dprintf(STDERR_FILENO,"/usr/bin/objdump: %s: File truncated\n",
                 name_file);
         close(fd);
         exit(EXIT_SUCCESS);

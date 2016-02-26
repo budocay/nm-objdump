@@ -73,7 +73,7 @@ void		which_header_correct_is(void *data, char *name_file, int fd)
     }
     else
     {
-        dprintf(STDERR_FILENO, "/usr/bin/nm: ./%s: File format not "
+        dprintf(STDERR_FILENO, "/usr/bin/nm: %s: File format not "
                 "recognized\n", name_file);
         close(fd);
         exit(EXIT_SUCCESS);
