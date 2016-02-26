@@ -24,7 +24,8 @@ SRCS_OBJDUMP	= ./src_objdump/main.c \
 		  ./src_objdump/verify_header.c \
 		  ./src_objdump/FlagsObjdump.c \
 		  ./src_objdump/Print_Flags_Type.c \
-          	  ./src_objdump/read_files.c
+          	  ./src_objdump/read_files.c \
+		  ./src_objdump/print_addr.c
 
 
 SRCS_NM		= ./src_nm/main.c \

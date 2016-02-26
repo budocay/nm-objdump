@@ -35,7 +35,6 @@ bool    section_not_printable(char *data, Elf64_Shdr *shdr, int cmpt)
     return false;
 }
 
-
 int		my_objdump(void *data, char *file, Elf64_Ehdr *elf)
 {
     Elf64_Shdr  *shdr;

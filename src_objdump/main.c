@@ -68,9 +68,7 @@ void				section_to_print(char *data, Elf64_Ehdr *elf,
         z = 0;
         while (inc < shdr[cmpt].sh_size)
         {
-            if (inc % 16 == 0)
-                printf(" %04x ", addr);
-            printf("%02x", to_print[inc]);
+	    print_addr(addr, inc, to_print);
             inc++;
             if (inc % 4 == 0 && inc % 16 != 0 && inc < shdr[cmpt].sh_size)
                 printf(" ");

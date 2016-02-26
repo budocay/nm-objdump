@@ -13,6 +13,14 @@
 #include <string.h>
 #include "objdump.h"
 
+void	    is_sym_tab(char *str, Elf64_Shdr *shdr, int i, int flag)
+{
+  if (strcmp(&str[shdr[i].sh_name], ".symtab") == 0 && flag == 0)
+    printf("HAS_SYMS, ");
+  else if (strcmp(&str[shdr[i].sh_name], ".symtab") == 0 && flag == 1)
+    printf("HAS_SYMS");
+}
+
 void        print_flags64(Elf64_Ehdr *elf, Elf64_Shdr *shdr, char *str)
 {
     int     i;
@@ -30,13 +38,7 @@ void        print_flags64(Elf64_Ehdr *elf, Elf64_Shdr *shdr, char *str)
         flag = 1;
     }
     while (++i < elf->e_shnum)
-    {
-        if (strcmp(&str[shdr[i].sh_name], ".symtab") == 0 && flag == 0)
-            printf("HAS_SYMS, ");
-        else if (strcmp(&str[shdr[i].sh_name], ".symtab") == 0 && flag == 1)
-            printf("HAS_SYMS");
-    }
-
+      is_sym_tab(str, shdr, i, flag);
     if (elf->e_type == ET_DYN)
         printf("DYNAMIC, ");
     if (elf->e_phnum != 0)
