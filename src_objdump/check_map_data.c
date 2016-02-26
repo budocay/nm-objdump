@@ -62,8 +62,9 @@ void		which_header_correct_is(void *data, char *name_file, int fd)
     Elf64_Ehdr  *elf;
     Elf32_Ehdr  *elf32;
 
-    if (check_header(((Elf64_Ehdr*)data)) != -1)
+    if (check_header((Elf64_Ehdr*)data) != -1)
       {
+          check_truncated_file(name_file, fd);
         elf = (Elf64_Ehdr*)data;
         if (elf->e_ident[EI_CLASS] == ELFCLASS64)
 	  my_objdump(data, name_file, elf);
@@ -76,10 +77,23 @@ void		which_header_correct_is(void *data, char *name_file, int fd)
       }
     else
       {
-        dprintf(STDERR_FILENO, "Unsuported ELFCLASS\n");
+          dprintf(STDERR_FILENO, "/usr/bin/objdump: ./%s:"
+                  " File format not recognized\n", name_file);
         close(fd);
         exit(EXIT_SUCCESS);
       }
+}
+
+void        check_truncated_file(char *name_file, int fd)
+{
+    if (verification(name_file) == NULL)
+    {
+        dprintf(STDERR_FILENO,"/usr/bin/objdump: ./%s: File truncated\n",
+                name_file);
+        close(fd);
+	exit(EXIT_SUCCESS);
+        return;
+    }
 }
 
 void        check_data(int fd, char *name_file)
@@ -92,12 +106,6 @@ void        check_data(int fd, char *name_file)
         dprintf(STDERR_FILENO, "%m\n");
         return;
       }
-    if (verification(name_file) == NULL)
-    {
-        dprintf(STDERR_FILENO,"objdump: %s: Truncated file\n", name_file);
-        close(fd);
-        return;
-    }
     if ((data = mmap(NULL, (size_t) file.st_size, PROT_READ,
                      MAP_SHARED | MAP_FILE, fd, 0)) == MAP_FAILED)
         return;

@@ -22,10 +22,7 @@ int         check_header_elf_32(Elf32_Ehdr *data)
         data->e_ident[EI_MAG3] != ELFMAG3 ||
         (data->e_type != ET_EXEC && data->e_type != ET_REL
         && data->e_type != ET_DYN && data->e_type != ET_CORE))
-    {
-        dprintf(STDERR_FILENO, "EI_MAG wrong\n");
         return (-1);
-    }
     if (data->e_ident[EI_CLASS] != ELFCLASS32)
         return (-1);
     if (data->e_type == ET_NONE)
@@ -41,11 +38,10 @@ int        check_header(Elf64_Ehdr *data)
         data->e_ident[EI_MAG3] != ELFMAG3 ||
         (data->e_type != ET_EXEC && data->e_type != ET_REL
         && data->e_type != ET_DYN && data->e_type != ET_CORE))
-    {
-        dprintf(STDERR_FILENO, "EI_MAG wrong\n");
         return (-1);
-    }
     if (data->e_ident[EI_CLASS] != ELFCLASS64)
         return (-1);
+    if (data->e_type == ET_NONE)
+        exit(EXIT_SUCCESS);
     return (0);
 }

@@ -1,12 +1,6 @@
-/*
-** check_set_tab.c for check_set_n in
-**
-** Made by lina_a
-** Login   <lina_a@epitech.net>
-**
-** Started on  Thu Feb 25 20:37:36 2016 lina_a
-** Last update Thu Feb 25 20:37:36 2016 lina_a
-*/
+//
+// Created by lina_a on 25/02/16.
+//
 
 #include <unistd.h>
 #include <stdio.h>
@@ -17,6 +11,18 @@
 #include <string.h>
 #include "objdump.h"
 #include "nm.h"
+
+
+void        check_truncated_file(char *name_file, int fd)
+{
+    if (verification(name_file) == NULL)
+    {
+        dprintf(STDERR_FILENO,"/usr/bin/objdump: ./%s: File truncated\n",
+                name_file);
+        close(fd);
+        return;
+    }
+}
 
 Elf64_Shdr	*set_sym_tab(Elf64_Shdr **string_sec, char *str, Elf64_Ehdr *elf,
                            Elf64_Shdr *shdr)
@@ -45,24 +51,26 @@ Elf64_Shdr	*set_sym_tab(Elf64_Shdr **string_sec, char *str, Elf64_Ehdr *elf,
 
 void		which_header_correct_is(void *data, char *name_file, int fd)
 {
-    Elf64_Ehdr  *elf;
-    Elf32_Ehdr  *elf32;
+    Elf64_Ehdr *elf;
+    Elf32_Ehdr *elf32;
 
-    if (check_header(((Elf64_Ehdr*)data)) != -1)
+    if (check_header((Elf64_Ehdr *) data) != -1)
     {
-        elf = (Elf64_Ehdr*)data;
+        check_truncated_file(name_file, fd);
+        elf = (Elf64_Ehdr *) data;
         if (elf->e_ident[EI_CLASS] == ELFCLASS64)
             my_nm(data, elf);
     }
-    else if (check_header_elf_32(((Elf32_Ehdr*)data)) != -1)
+    else if (check_header_elf_32(((Elf32_Ehdr *) data)) != -1)
     {
-        elf32 = (Elf32_Ehdr*)data;
+        elf32 = (Elf32_Ehdr *) data;
         if (elf32->e_ident[EI_CLASS] == ELFCLASS32)
-            my_nm_32(data, name_file);
+            my_nm_32();
     }
     else
     {
-        dprintf(STDERR_FILENO, "Unsuported ELFCLASS\n");
+        dprintf(STDERR_FILENO, "/usr/bin/nm: ./%s: File format not "
+                "recognized\n", name_file);
         close(fd);
         exit(EXIT_SUCCESS);
     }
@@ -75,12 +83,6 @@ void    check_file(int fd, char *av)
 
     if ((fstat(fd, &file)) == -1)
         return;
-    if (verification(av) == NULL)
-    {
-        dprintf(STDERR_FILENO,"nm: %s: File truncated\n", av);
-        close(fd);
-        return;
-    }
     if ((data = mmap(NULL, (size_t) file.st_size, PROT_READ,
                      MAP_SHARED | MAP_FILE, fd, 0)) == MAP_FAILED)
     {
@@ -97,7 +99,7 @@ void    check_file(int fd, char *av)
 }
 
 
-void        my_nm_32()
+void        my_nm_32( )
 {
 
 }

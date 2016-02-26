@@ -18,26 +18,25 @@
 
 #include <stdbool.h>
 
-void    print_flags64(Elf64_Ehdr *elf, Elf64_Shdr *shdr, char *str);
-void    print_flags32(Elf32_Ehdr *elf, Elf32_Shdr *shdr, char *str);
+void        print_flags64(Elf64_Ehdr *elf, Elf64_Shdr *shdr, char *str);
+void        print_flags32(Elf32_Ehdr *elf, Elf32_Shdr *shdr, char *str);
 char        *verification(char *av);
 char        *verify_sect_name(FILE *file_elf, Elf64_Shdr sectHdr,
                               Elf64_Ehdr elfHdr);
-bool    section_not_printable(char *data, Elf64_Shdr *shdr, int cmpt);
-
+bool        section_not_printable(char *data, Elf64_Shdr *shdr, int cmpt);
+void        check_truncated_file(char *name_file, int fd);
 /*
 ** Prototype pour elf64 bits
 */
 
-int        my_objdump(void *pVoid, char *file, Elf64_Ehdr *elf);
+int         my_objdump(void *pVoid, char *file, Elf64_Ehdr *elf);
 
 void        objdump_flag_s(char *str, Elf64_Ehdr *elf, Elf64_Shdr *shdr);
-int        check_header_file(Elf64_Ehdr *data);
-void       check_data(int fd, char *name_file);
-void	   print_val(unsigned int j, unsigned int *z, unsigned char *w,
+void        check_data(int fd, char *name_file);
+void	    print_val(unsigned int j, unsigned int *z, unsigned char *w,
                         char *t);
-int        found_flag(char *str, Elf64_Shdr *shdr, Elf64_Ehdr *elf);
-void       section_to_print(char *data, Elf64_Ehdr *elf,
+int         found_flag(char *str, Elf64_Shdr *shdr, Elf64_Ehdr *elf);
+void        section_to_print(char *data, Elf64_Ehdr *elf,
                             Elf64_Shdr *shdr, int cmpt);
 
 void        section_to_print(char *data, Elf64_Ehdr *elf,
@@ -57,7 +56,6 @@ void                    section_to_print_elf_32(char *data, Elf32_Ehdr *elf,
                                                 Elf32_Shdr *shdr, int cmpt);
 void		print_ascii_elf_32(unsigned int j, unsigned int *z,
                                unsigned char *w, char *t);
-int         check_header_file_elf_32(Elf32_Ehdr *elf);
 int         check_header_elf_32(Elf32_Ehdr *data);
 int         flags_to_found32(Elf32_Ehdr *elf, Elf32_Shdr *shdr, char *str);
 

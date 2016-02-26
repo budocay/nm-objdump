@@ -123,6 +123,6 @@ int   main(int ac, char **av)
     }
   }
   else
-      dprintf(STDERR_FILENO,"Usage: ./my_nm <binary>\n");
+      dprintf(STDERR_FILENO,"/usr/bin/nm 'a.out' : No such file\n");
   return (0);
 }

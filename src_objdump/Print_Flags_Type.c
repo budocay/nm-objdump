@@ -11,7 +11,6 @@
 #include <elf.h>
 #include <stdio.h>
 #include <string.h>
-#include "objdump.h"
 
 void        print_flags64(Elf64_Ehdr *elf, Elf64_Shdr *shdr, char *str)
 {
