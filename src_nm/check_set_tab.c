@@ -1,20 +1,11 @@
 /*
-<<<<<<< HEAD
-** check_set_tab.c for check_set_tab in /home/lina_a/rendu/B4/PSU_2015_nmobjdump/src_nm
-=======
-** check_set_tab.c for check in
->>>>>>> 47f35b7ed9719a7a6799b754904a520664a1a445
+** check_set_tab.c for check_set_tab in
 **
 ** Made by lina_a
 ** Login   <lina_a@epitech.net>
 **
-<<<<<<< HEAD
-** Started on  Fri Feb 26 13:50:38 2016 lina_a
-** Last update Fri Feb 26 13:50:38 2016 lina_a
-=======
-** Started on  Fri Feb 26 13:34:55 2016 lina_a
-** Last update Fri Feb 26 13:34:55 2016 lina_a
->>>>>>> 47f35b7ed9719a7a6799b754904a520664a1a445
+** Started on  Fri Feb 26 13:55:12 2016 lina_a
+** Last update Fri Feb 26 13:55:12 2016 lina_a
 */
 
 #include <unistd.h>
@@ -111,11 +102,7 @@ void    check_file(int fd, char *av)
     }
 }
 
-<<<<<<< HEAD
 char        *my_nm_32(void *data, Elf32_Ehdr *elf)
-=======
-void        my_nm_32( )
->>>>>>> 47f35b7ed9719a7a6799b754904a520664a1a445
 {
     unsigned int             idx;
     Elf32_Shdr		*shdr;
