@@ -22,15 +22,16 @@ void        check_truncated_file(char *name_file, int fd)
 {
     if (verification(name_file) == NULL)
     {
-        dprintf(STDERR_FILENO,"/usr/bin/objdump: ./%s: File truncated\n",
+        dprintf(STDERR_FILENO, "/usr/bin/objdump: ./%s: File truncated\n",
                 name_file);
         close(fd);
         return;
     }
 }
 
-Elf64_Shdr	*set_sym_tab(Elf64_Shdr **string_sec, char *str, Elf64_Ehdr *elf,
-                           Elf64_Shdr *shdr)
+Elf64_Shdr	*set_sym_tab(Elf64_Shdr **string_sec, char *str,
+			     Elf64_Ehdr *elf,
+			     Elf64_Shdr *shdr)
 {
     int			i;
     Elf64_Shdr		*symsection;

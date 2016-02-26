@@ -22,7 +22,7 @@ char        *verification(char *av)
 
     if ((file_elf = fopen(av, "r")) == NULL)
         return (NULL);
-    if ((fread(&elfHdr,sizeof elfHdr,1, file_elf)) < 1)
+    if ((fread(&elfHdr, sizeof elfHdr, 1, file_elf)) < 1)
         return (NULL);
     if ((fseek(file_elf, elfHdr.e_shoff + elfHdr.e_shstrndx * sizeof sectHdr,
                SEEK_SET)) == -1)
