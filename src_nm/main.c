@@ -21,25 +21,24 @@ char                print_char_elf2(Elf64_Sym sym, Elf64_Shdr *shdr)
 
     c = '\0';
     if (sym.st_shndx == SHN_ABS)
-        c = 'A';
+      c = 'A';
     else if (sym.st_shndx == SHN_COMMON)
-        c = 'C';
-    else if (shdr[sym.st_shndx].sh_type == SHT_NOBITS
-             && shdr[sym.st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
-        c = 'B';
-    else if (shdr[sym.st_shndx].sh_type == SHT_PROGBITS
-             && shdr[sym.st_shndx].sh_flags == SHF_ALLOC)
-        c = 'R';
-    else if (shdr[sym.st_shndx].sh_type == SHT_PROGBITS
-             && shdr[sym.st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
-        c = 'D';
-    else if (shdr[sym.st_shndx].sh_type == SHT_PROGBITS
-             && shdr[sym.st_shndx].sh_flags == (SHF_ALLOC | SHF_EXECINSTR))
-        c = 'T';
-    else if (shdr[sym.st_shndx].sh_type == SHT_DYNAMIC)
-        c = 'D';
-    else
-        c = '?';
+      c = 'C';
+    else if (ELF64_ST_TYPE(sym.st_info) == STT_OBJECT
+	     && shdr[sym.st_shndx].sh_flags == 3)
+      c = 'B';
+    else if (ELF64_ST_TYPE(sym.st_info)== STT_OBJECT
+             && shdr[sym.st_shndx].sh_flags == 2)
+      c = 'R';
+    else if (ELF64_ST_TYPE(sym.st_info) == STT_OBJECT)
+      c = 'D';
+    else if (ELF64_ST_TYPE(sym.st_info) == STT_FUNC)
+      c = 'T';
+    if ((shdr[sym.st_shndx].sh_type == SHT_DYNAMIC &&
+	 ELF64_ST_TYPE(sym.st_info) == STT_OBJECT)
+	|| (ELF64_ST_TYPE(sym.st_info) == STT_NOTYPE
+            && shdr[sym.st_shndx].sh_type == SHT_PROGBITS))
+      c = 'D';
     return c;
 }
 
@@ -55,6 +54,8 @@ char                print_char_elf(Elf64_Sym sym, Elf64_Shdr *shdr)
         if (sym.st_shndx == SHN_UNDEF)
             c = 'w';
     }
+   else if (shdr[sym.st_shndx].sh_flags == 1)
+        c = 'B';
     else if (ELF64_ST_BIND(sym.st_info) == STB_WEAK &&
             ELF64_ST_BIND(sym.st_info) == STT_OBJECT)
     {
@@ -64,8 +65,9 @@ char                print_char_elf(Elf64_Sym sym, Elf64_Shdr *shdr)
     }
     else if (sym.st_shndx == SHN_UNDEF)
         c = 'U';
-   else if (print_char_elf2(sym, shdr) != '\0')
-        c = print_char_elf2(sym, shdr);
+    else if ((c = print_char_elf2(sym, shdr)) != '\0');
+    else
+      c = '?';
     if (ELF64_ST_BIND(sym.st_info) == STB_LOCAL && c != '?')
         c += 32;
     return c;
