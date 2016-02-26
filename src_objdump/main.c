@@ -115,6 +115,6 @@ int         main(int ac, char **av)
 	    }
       }
     else
-      dprintf(STDERR_FILENO, "/usr/bin/objdump 'a.out' : No such file\n");
+      dprintf(STDERR_FILENO, "/usr/bin/objdump 'a.out': No such file\n");
     return (0);
 }
