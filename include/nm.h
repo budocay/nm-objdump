@@ -11,8 +11,8 @@
 #ifndef _NM_H
 #define _NM_H
 
-
 #include <elf.h>
+
 char                *my_nm_32(void *data, Elf32_Ehdr *elf);
 char                *my_nm(void *data, Elf64_Ehdr *elf);
 void                print_sec_and_sym(Elf64_Sym sym, void *data,
