@@ -14,6 +14,8 @@ RM	= rm -f
 
 CFLAGS	+= -Wall -Wextra -I./include
 
+DEBUG	= -g3
+
 NAME_OBJDUMP	= my_objdump
 
 NAME_NM		= my_nm

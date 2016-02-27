@@ -35,10 +35,10 @@ char                print_char_elf2(Elf64_Sym sym, Elf64_Shdr *shdr)
     else if (ELF64_ST_TYPE(sym.st_info) == STT_FUNC)
       c = 'T';
     if ((shdr[sym.st_shndx].sh_type == SHT_DYNAMIC &&
-	 ELF64_ST_TYPE(sym.st_info) == STT_OBJECT)
-	|| (ELF64_ST_TYPE(sym.st_info) == STT_NOTYPE
-            && shdr[sym.st_shndx].sh_type == SHT_PROGBITS))
+	 ELF64_ST_TYPE(sym.st_info) == STT_OBJECT))
       c = 'D';
+    else if (sym.st_shndx == SHN_UNDEF)
+        c = 'U';
     return c;
 }
 
@@ -63,8 +63,6 @@ char                print_char_elf(Elf64_Sym sym, Elf64_Shdr *shdr)
         if (sym.st_shndx == SHN_UNDEF)
             c = 'v';
     }
-    else if (sym.st_shndx == SHN_UNDEF)
-        c = 'U';
     else if ((c = print_char_elf2(sym, shdr)) != '\0');
     else
       c = '?';
