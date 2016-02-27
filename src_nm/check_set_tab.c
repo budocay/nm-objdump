@@ -22,7 +22,7 @@ void        check_truncated_file(char *name_file, int fd)
 {
     if (verification(name_file) == NULL)
     {
-        dprintf(STDERR_FILENO, "/usr/bin/objdump: %s: File truncated\n",
+        dprintf(STDERR_FILENO, "/usr/bin/nm: %s: File truncated\n",
                 name_file);
         close(fd);
 	exit(EXIT_SUCCESS);
