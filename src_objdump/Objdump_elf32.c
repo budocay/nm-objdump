@@ -104,8 +104,8 @@ int		my_objdump_elf_32(void *data, char *file)
       printf("tata");
     if (elf->e_machine == EM_386)
       {
-        printf("\n%s:%5cfile format %s\n", file, ' ', ELF_32);
-        printf("architecture: %s, flags 0x%08d:\n", INTEL_32,
+        printf("\n%s:%5cfile format %s\n", file, ' ', ELF_64);
+        printf("architecture: %s, flags 0x%08d:\n", INTEL_64,
                found_flag_elf_32(str, shdr, elf));
       }
     print_flags32(elf, shdr, str);

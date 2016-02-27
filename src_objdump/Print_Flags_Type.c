@@ -59,7 +59,7 @@ void        print_flags32(Elf32_Ehdr *elf, Elf32_Shdr *shdr, char *str)
         printf("HAS_RELOC, ");
     while (++i < elf->e_shnum)
         if (strcmp(&str[shdr[i].sh_name], ".symtab") == 0)
-            printf("HAS_SYM, ");
+            printf("HAS_SYMS, ");
     if (elf->e_type == ET_DYN)
         printf("DYNAMIC, ");
     if (elf->e_phnum != 0)
