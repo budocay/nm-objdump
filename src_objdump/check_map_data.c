@@ -54,6 +54,18 @@ int		my_objdump(void *data, char *file, Elf64_Ehdr *elf)
     return (0);
 }
 
+int        check_truncated_file(char *name_file, int fd)
+{
+    if (verification(name_file) == -1)
+    {
+        dprintf(STDERR_FILENO, "/usr/bin/objdump: %s: File truncated\n",
+                name_file);
+        close(fd);
+        return (-1);
+    }
+    return (0);
+}
+
 void		which_header_correct_is(void *data, char *name_file, int fd)
 {
     Elf64_Ehdr  *elf;
@@ -61,13 +73,16 @@ void		which_header_correct_is(void *data, char *name_file, int fd)
 
     if (check_header((Elf64_Ehdr*)data) != -1)
       {
-          check_truncated_file(name_file, fd);
+	if ((check_truncated_file(name_file, fd)) == -1)
+	  return;
         elf = (Elf64_Ehdr*)data;
         if (elf->e_ident[EI_CLASS] == ELFCLASS64)
 	  my_objdump(data, name_file, elf);
       }
     else if (check_header_elf_32(((Elf32_Ehdr*)data)) != -1)
       {
+	if ((check_truncated_file(name_file, fd)) == -1)
+	  return;
         elf32 = (Elf32_Ehdr*)data;
         if (elf32->e_ident[EI_CLASS] == ELFCLASS32)
 	  my_objdump_elf_32(data, name_file);
@@ -79,18 +94,6 @@ void		which_header_correct_is(void *data, char *name_file, int fd)
         close(fd);
         exit(EXIT_SUCCESS);
       }
-}
-
-void        check_truncated_file(char *name_file, int fd)
-{
-    if (verification(name_file) == NULL)
-    {
-        dprintf(STDERR_FILENO, "/usr/bin/objdump: %s: File truncated\n",
-                name_file);
-        close(fd);
-        exit(EXIT_SUCCESS);
-        return;
-    }
 }
 
 void        check_data(int fd, char *name_file)

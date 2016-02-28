@@ -18,15 +18,16 @@
 #include "objdump.h"
 #include "nm.h"
 
-void        check_truncated_file(char *name_file, int fd)
+int        check_truncated_file(char *name_file, int fd)
 {
-    if (verification(name_file) == NULL)
+    if (verification(name_file) == -1)
     {
         dprintf(STDERR_FILENO, "/usr/bin/nm: %s: File truncated\n",
                 name_file);
         close(fd);
-	exit(EXIT_SUCCESS);
+	return (-1);
     }
+    return (0);
 }
 
 Elf64_Shdr	*set_sym_tab(Elf64_Shdr **string_sec, char *str,
@@ -60,17 +61,19 @@ void		which_header_correct_is(void *data, char *name_file, int fd)
 
     if (check_header((Elf64_Ehdr *) data) != -1)
     {
-        check_truncated_file(name_file, fd);
+      if ((check_truncated_file(name_file, fd)) == -1)
+	return;
         elf = (Elf64_Ehdr *) data;
         if (elf->e_ident[EI_CLASS] == ELFCLASS64)
             my_nm(data, elf);
     }
     else if (check_header_elf_32(((Elf32_Ehdr *) data)) != -1)
     {
-        check_truncated_file(name_file, fd);
-        elf32 = (Elf32_Ehdr *) data;
-        if (elf32->e_ident[EI_CLASS] == ELFCLASS32)
-            my_nm_32(data, elf32);
+      if ((check_truncated_file(name_file, fd)) == -1)
+	return;
+      elf32 = (Elf32_Ehdr *) data;
+      if (elf32->e_ident[EI_CLASS] == ELFCLASS32)
+	my_nm_32(data, elf32);
     }
     else
     {

@@ -58,24 +58,24 @@ void				section_to_print(char *data, Elf64_Ehdr *elf,
     int			        addr;
     unsigned int		z;
 
-    addr = (int) shdr[cmpt].sh_addr;
     if (section_not_printable(data, shdr, cmpt) == true);
     else
     {
-        printf("Contents of section %s:\n", &data[shdr[cmpt].sh_name]);
-        to_print = (unsigned char *) ((char *) elf + shdr[cmpt].sh_offset);
-        inc = 0;
-        z = 0;
-        while (inc < shdr[cmpt].sh_size)
+      addr = (int) shdr[cmpt].sh_addr;
+      printf("Contents of section %s:\n", &data[shdr[cmpt].sh_name]);
+      to_print = (unsigned char *) ((char*)elf + shdr[cmpt].sh_offset);
+      inc = 0;
+      z = 0;
+      while (inc < shdr[cmpt].sh_size)
         {
-	    print_addr(addr, inc, to_print);
-            inc++;
-            if (inc % 4 == 0 && inc % 16 != 0 && inc < shdr[cmpt].sh_size)
-                printf(" ");
-            if (inc % 16 == 0)
-                addr += 16;
-            if (inc % 16 == 0 || inc >= shdr[cmpt].sh_size)
-                print_val(inc, &z, to_print, (char *) to_print);
+	  print_addr(addr, inc, to_print);
+	  inc++;
+	  if (inc % 4 == 0 && inc % 16 != 0 && inc < shdr[cmpt].sh_size)
+	    printf(" ");
+	  if (inc % 16 == 0)
+	    addr += 16;
+	  if (inc % 16 == 0 || inc >= shdr[cmpt].sh_size)
+	    print_val(inc, &z, to_print, (char *) to_print);
         }
     }
 }

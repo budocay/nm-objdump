@@ -22,11 +22,12 @@ void	    print_addr(int addr, unsigned int inc, unsigned char *to_print);
 void	    is_sym_tab(char *str, Elf64_Shdr *shdr, int i, int flag);
 void        print_flags64(Elf64_Ehdr *elf, Elf64_Shdr *shdr, char *str);
 void        print_flags32(Elf32_Ehdr *elf, Elf32_Shdr *shdr, char *str);
-char        *verification(char *av);
-char        *verify_sect_name(FILE *file_elf, Elf64_Shdr sectHdr,
+int         verification(char *av);
+int	    verify_sect_name(FILE *file_elf, Elf64_Shdr sectHdr,
                               Elf64_Ehdr elfHdr);
 bool        section_not_printable(char *data, Elf64_Shdr *shdr, int cmpt);
-void        check_truncated_file(char *name_file, int fd);
+int         check_truncated_file(char *name_file, int fd);
+
 /*
 ** Prototype pour elf64 bits
 */

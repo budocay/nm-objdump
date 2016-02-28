@@ -107,9 +107,9 @@ int		my_objdump_elf_32(void *data, char *file)
         printf("\n%s:%5cfile format %s\n", file, ' ', ELF_32);
         printf("architecture: %s, flags 0x%08d:\n", INTEL_32,
                found_flag_elf_32(str, shdr, elf));
+	print_flags32(elf, shdr, str);
+	printf("start address 0x%08x\n\n", (int)elf->e_entry);
+	objdump_flag_s_elf_32(str, elf, shdr);
       }
-    print_flags32(elf, shdr, str);
-    printf("start address 0x%08x\n\n", (int)elf->e_entry);
-    objdump_flag_s_elf_32(str, elf, shdr);
     return (0);
 }

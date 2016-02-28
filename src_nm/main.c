@@ -88,10 +88,10 @@ void                print_sec_and_sym(Elf64_Sym sym, void *data,
 
 char                *my_nm(void *data, Elf64_Ehdr *elf)
 {
-    unsigned int             idx;
-    Elf64_Shdr		*shdr;
+    unsigned int    idx;
+    Elf64_Shdr	    *shdr;
     Elf64_Sym       sym;
-    Elf64_Shdr		*pShdr;
+    Elf64_Shdr	    *pShdr;
     char            *str;
 
     idx = 0;
